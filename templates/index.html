@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Recommender System</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(120deg, #232526 0%, #414345 100%);
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            color: #fafafa;
+            margin: 0;
+            min-height: 100vh;
+            letter-spacing: 0.02em;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #1f1c2c 0%, #09c6f9 100%);
+            box-shadow: 0 3px 20px 0 rgba(9, 198, 249, 0.11);
+            border-bottom: 0.5px solid rgba(148,255,251,0.19);
+        }
+        .navbar-brand {
+            font-size: 2.2rem;
+            color: #fafafa !important;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 0 16px #09c6f9, 0 1px 5px #000B;
+        }
+        .nav-link {
+            color: #eeeeee !important;
+            font-size: 1.1rem;
+            margin: 0 2px;
+            font-weight: 600;
+            border-radius: 6px;
+            padding: 4px 16px;
+            transition: background 0.19s, box-shadow 0.29s, color 0.22s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(9,198,249,0.11);
+            color: #34d1ff !important;
+            box-shadow: 0 0 8px 0 #09c6f9AA;
+        }
+        .container {
+            margin-top: 35px;
+            padding-bottom: 40px;
+        }
+        h1 {
+            font-family: 'Montserrat', 'Segoe UI', Arial;
+            font-size: 2.7rem;
+            font-weight: 700;
+            color: #e0e8ef;
+            text-shadow: 0 1px 8px #0ff2fa44;
+            margin-bottom: 0.7em;
+        }
+        .card {
+            background: rgba(30,32,36,0.88);
+            border: none;
+            border-radius: 22px;
+            box-shadow: 0 6px 22px 0 #09c6f944, 0 1.5px 4px 0 #0005;
+            transition: transform 0.19s cubic-bezier(.4,2,.7,1), box-shadow 0.32s cubic-bezier(.4,2,.7,1);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 32px;
+        }
+        .card:hover {
+            transform: scale(1.048) translateY(-5px) rotateZ(-0.2deg);
+            box-shadow: 0 8px 32px 0 #42e5feaa, 0 2.5px 12px #0008;
+            background: linear-gradient(100deg, #222b2e 0%, #14213d 100%);
+        }
+        .card-img-top {
+            height: 290px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #262b30;
+            margin-top: 13px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 18px 0 #09c6f944;
+        }
+        .card-body {
+            text-align: left;
+            padding: 13px 11px 20px 18px;
+        }
+        .card-title {
+            font-size:1.13rem;
+            font-weight: 700;
+            margin-bottom: 9px;
+            color: #00e0d3;
+            text-shadow: 0 2px 8px #00e0d344;
+        }
+        .card-text {
+            font-size: 1.03rem;
+            margin-bottom: 7px;
+        }
+        @media (max-width: 991px) {
+            .card-img-top { height:220px; }
+        }
+        @media (max-width: 767px) {
+            .card-img-top { height:160px; }
+            h1 { font-size:1.32rem; }
+            .navbar-brand { font-size:1.1rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand">My Book Recommender</a>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/recommend">Recommend</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <h1>Top 50 Books</h1>
+            </div>
+
+            {% for i in range(0, book_name|length) %}
+            <div class="col-md-3 mt-5">
+                <div class="card">
+                    <img class="card-img-top" src="{{ image[i] }}" />
+                    <div class="card-body">
+                        <p class="card-title">{{ book_name[i] }}</p>
+                        <h5 class="card-text">Author: {{ author[i] }}</h5>
+                        <h5 class="card-text">Votes: {{ votes[i] }}</h5>
+                        <h5 class="card-text">Rating: {{ rating[i] }}</h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+
+</body>
+</html>
+
+    

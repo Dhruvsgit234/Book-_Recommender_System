@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Recommender System</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(120deg, #232526 0%, #232b33 100%);
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            color: #fafafa;
+            margin: 0;
+            min-height: 100vh;
+            letter-spacing: 0.02em;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #1f1c2c 0%, #09c6f9 100%);
+            box-shadow: 0 3px 20px 0 rgba(9,198,249,0.11);
+            border-bottom: 0.5px solid rgba(148,255,251,0.19);
+        }
+        .navbar-brand {
+            font-size: 2.2rem;
+            color: #fafafa !important;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 0 16px #09c6f9, 0 1px 5px #000B;
+        }
+        .nav-link {
+            color: #eeeeee !important;
+            font-size: 1.1rem;
+            margin: 0 2px;
+            font-weight: 600;
+            border-radius: 6px;
+            padding: 4px 16px;
+            transition: background 0.19s, box-shadow 0.29s, color 0.22s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(9,198,249,0.11);
+            color: #34d1ff !important;
+            box-shadow: 0 0 8px 0 #09c6f9AA;
+        }
+        h1 {
+            font-family: 'Montserrat', 'Segoe UI', Arial;
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #e0e8ef;
+            text-shadow: 0 1px 8px #0ff2fa44;
+            margin-bottom: 0.7em;
+        }
+        .form-control {
+            background: linear-gradient(90deg, #202434 0%, #263850 100%);
+            border: 1.6px solid #0efcca99;
+            color: #fafafa;
+            padding: 15px 20px;
+            font-size: 1.14rem;
+            border-radius: 13px;
+            box-shadow: 0 0 0 2px #34d1ff11;
+            transition: border 0.19s, box-shadow 0.22s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #00e0d3;
+            box-shadow: 0 0 8.5px #00e0d3;
+        }
+        .btn-warning {
+            font-size: 1rem;
+            padding: 11px 28px;
+            border-radius: 11px;
+            font-weight: 700;
+            color: #14151a;
+            background: linear-gradient(100deg, #09fbd3 0%, #0083fe 100%);
+            border: none;
+            box-shadow: 0 2.5px 22px #09c6f980;
+            transition: background 0.23s, box-shadow 0.23s;
+        }
+        .btn-warning:hover {
+            background: linear-gradient(80deg, #34d1ff 0%, #09fbd3 100%);
+            color: #fff;
+            box-shadow: 0 4px 12px #42e5feBB;
+        }
+        .error-message {
+            color: #ef3061;
+            font-size: 1.15rem;
+            margin-top: 19px;
+            text-align: center;
+            text-shadow: 0 0 5.5px #ef306144;
+        }
+        .card {
+            background: rgba(30,32,36,0.88);
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 6px 22px 0 #09c6f944, 0 1.5px 4px 0 #0005;
+            transition: transform 0.18s cubic-bezier(.4,2,.7,1), box-shadow 0.28s cubic-bezier(.4,2,.7,1);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 35px;
+        }
+        .card:hover {
+            transform: scale(1.05) translateY(-7px) rotateZ(0.5deg);
+            box-shadow: 0 10px 38px 0 #40fff7cc, 0 2.5px 12px #000A;
+            background: linear-gradient(120deg,#222b2e 0%, #14213d 100%);
+        }
+        .card-img-top {
+            height: 220px;
+            width: 85%;
+            object-fit: cover;
+            border-radius: 9px;
+            background: #262b30;
+            margin-top: 10px;
+            margin-bottom: 13px;
+            box-shadow: 0 4px 14px 0 #00fac844;
+        }
+        p, h4 {
+            color: #b7feff;
+            font-size: 1.03rem;
+            text-shadow: 0 0 2.5px #34d1ff33;
+        }
+        h4 { font-size: 1.11rem; }
+        .card-body {
+            text-align: center;
+            padding: 13px 11px 17px 13px;
+        }
+        @media (max-width: 991px) {
+            .card-img-top { height:165px; }
+        }
+        @media (max-width: 575px) {
+            .card-img-top { height:120px; }
+            h1 { font-size:1.04rem; }
+            .navbar-brand { font-size: 1.0rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white">My Book Recommender</a>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link text-white" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/recommend">Recommend</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 mt-4">
+                <h1 class="text-white">Recommend Books</h1>
+
+                <!-- FORM -->
+                <form action="/recommend_books" method="POST">
+                    <input name="user_input" type="text" class="form-control" placeholder="Enter Book Name"><br>
+                    <input type="submit" class="btn btn-lg btn-warning">
+                </form>
+
+                <!-- ERROR MESSAGE -->
+                {% if error %}
+                    <div class="error-message">{{ error }}</div>
+                {% endif %}
+            </div>
+
+            {% if data %}
+                {% for i in data %}
+                <div class="col-md-3 mt-5">
+                    <div class="card bg-dark text-white">
+                        <div class="card-body text-center">
+                            <img class="card-img-top" src="{{i[2]}}">
+                            <p>{{i[0]}}</p>
+                            <h4>{{i[1]}}</h4>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+
+</body>
+</html>
+
