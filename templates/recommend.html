@@ -53,17 +53,23 @@
         .form-control {
             background: linear-gradient(90deg, #202434 0%, #263850 100%);
             border: 1.6px solid #0efcca99;
-            color: #fafafa;
+            color: #fafafa !important;
             padding: 15px 20px;
             font-size: 1.14rem;
             border-radius: 13px;
             box-shadow: 0 0 0 2px #34d1ff11;
             transition: border 0.19s, box-shadow 0.22s;
         }
+        .form-control::placeholder {
+            color: #bffcff !important;
+            opacity: 0.85;
+        }
         .form-control:focus {
             outline: none;
             border-color: #00e0d3;
             box-shadow: 0 0 8.5px #00e0d3;
+            background: #151c29;
+            color: #fff !important;
         }
         .btn-warning {
             font-size: 1rem;
@@ -123,6 +129,29 @@
             text-align: center;
             padding: 13px 11px 17px 13px;
         }
+        .author-label {
+            color: #4ec9fe;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .buy-btn {
+            background: linear-gradient(90deg,#09fbd3 0%,#0083fe 100%);
+            color: #232526;
+            margin-top: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 0 6px 22px 0 #09c6f944;
+            transition: background 0.22s, box-shadow 0.19s;
+            padding: 8px 20px;
+            border: none;
+            display: inline-block;
+        }
+        .buy-btn:hover {
+            background: linear-gradient(80deg, #34d1ff 0%, #09fbd3 100%);
+            color: #fff;
+            box-shadow: 0 0 18px 0 #42e5feaa;
+        }
         @media (max-width: 991px) {
             .card-img-top { height:165px; }
         }
@@ -173,8 +202,9 @@
                     <div class="card bg-dark text-white">
                         <div class="card-body text-center">
                             <img class="card-img-top" src="{{i[2]}}">
-                            <p>{{i[0]}}</p>
-                            <h4>{{i[1]}}</h4>
+                            <p class="card-title">{{i[0]}}</p>
+                            <h4 class="author-label">Author: {{i[1]}}</h4>
+                            <a href="https://www.google.com/search?q=buy+{{ i[0]|urlencode }}+{{ i[1]|urlencode }}" target="_blank" class="btn buy-btn">Buy / Best Price</a>
                         </div>
                     </div>
                 </div>
