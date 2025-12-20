@@ -2,227 +2,617 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Book Recommender System</title>
-
+    <title>Book Recommender System - Discover Your Next Read</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(9,198,249,0.3); }
+            50% { box-shadow: 0 0 40px rgba(9,198,249,0.6), 0 0 60px rgba(0,224,211,0.3); }
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes letterPop {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
         body {
-            background: linear-gradient(120deg, #232526 0%, #414345 100%);
-            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            background: #0a0a0f;
+            font-family: 'Space Grotesk', 'Montserrat', sans-serif;
             color: #fafafa;
             margin: 0;
             min-height: 100vh;
-            letter-spacing: 0.02em;
+            overflow-x: hidden;
+            position: relative;
         }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(9,198,249,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0,224,211,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(147,51,234,0.1) 0%, transparent 50%);
+            animation: gradientShift 15s ease infinite;
+            background-size: 200% 200%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
         .navbar {
-            background: linear-gradient(90deg, #1f1c2c 0%, #09c6f9 100%);
-            box-shadow: 0 3px 20px 0 rgba(9, 198, 249, 0.11);
-            border-bottom: 0.5px solid rgba(148,255,251,0.19);
+            background: rgba(15,15,20,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(9,198,249,0.2);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: fadeInUp 0.8s ease;
         }
+        
         .navbar-brand {
-            font-size: 2.2rem;
-            color: #fafafa !important;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-shadow: 0 0 16px #09c6f9, 0 1px 5px #000B;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #09c6f9 0%, #00e0d3 50%, #9333ea 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite, letterPop 2s ease-in-out infinite;
+            letter-spacing: -1px;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
+        
+        .navbar-brand:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+        
         .nav-link {
-            color: #eeeeee !important;
+            color: #b8d4e3 !important;
             font-size: 1.1rem;
-            margin: 0 2px;
             font-weight: 600;
-            border-radius: 6px;
-            padding: 4px 16px;
-            transition: background 0.19s, box-shadow 0.29s, color 0.22s;
+            margin: 0 8px;
+            padding: 10px 20px !important;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
         }
-        .nav-link:hover, .nav-link.active {
-            background: rgba(9,198,249,0.11);
-            color: #34d1ff !important;
-            box-shadow: 0 0 8px 0 #09c6f9AA;
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(9,198,249,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
-        .container {
-            margin-top: 35px;
-            padding-bottom: 40px;
+        
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 300px;
+            height: 300px;
         }
-        h1 {
-            font-family: 'Montserrat', 'Segoe UI', Arial;
-            font-size: 2.7rem;
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: #09c6f9 !important;
+            transform: translateY(-3px);
+            background: rgba(9,198,249,0.1);
+        }
+        
+        .hero-section {
+            text-align: center;
+            padding: 100px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #09c6f9 0%, #00e0d3 50%, #9333ea 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease infinite, fadeInUp 1s ease;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+        
+        .hero-title span {
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .hero-title span:nth-child(2) { animation-delay: 0.1s; }
+        .hero-title span:nth-child(3) { animation-delay: 0.2s; }
+        .hero-title span:nth-child(4) { animation-delay: 0.3s; }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #b8d4e3;
+            margin-bottom: 50px;
+            animation: fadeInUp 1.2s ease;
+            font-weight: 400;
+        }
+        
+        .discovery-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .discovery-card {
+            background: rgba(20,20,30,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            border: 2px solid rgba(9,198,249,0.2);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation: fadeInUp 0.8s ease backwards;
+        }
+        
+        .discovery-card:nth-child(1) { animation-delay: 0.2s; }
+        .discovery-card:nth-child(2) { animation-delay: 0.4s; }
+        .discovery-card:nth-child(3) { animation-delay: 0.6s; }
+        
+        .discovery-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(9,198,249,0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s;
+        }
+        
+        .discovery-card:hover::before {
+            transform: scale(1);
+        }
+        
+        .discovery-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(135deg, #09c6f9, #00e0d3, #9333ea);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .discovery-card:hover::after {
+            opacity: 1;
+        }
+        
+        .discovery-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            border-color: #09c6f9;
+            box-shadow: 0 20px 60px rgba(9,198,249,0.4);
+            background: rgba(20,20,30,0.9);
+        }
+        
+        .discovery-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(9,198,249,0.5));
+        }
+        
+        .discovery-title {
+            font-size: 1.6rem;
             font-weight: 700;
-            color: #e0e8ef;
-            text-shadow: 0 1px 8px #0ff2fa44;
-            margin-bottom: 0.7em;
+            color: #00e0d3;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
         }
+        
+        .discovery-desc {
+            color: #b8d4e3;
+            font-size: 1rem;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #09c6f9 0%, #00e0d3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 80px 0 50px;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+            letter-spacing: -1px;
+        }
+        
+        .trending-section {
+            background: transparent;
+            border-radius: 30px;
+            padding: 0;
+            margin: 50px 0;
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .trending-section .row,
+        .row {
+            margin: 0 -15px;
+        }
+        
+        .trending-section .row > [class*="col-"],
+        .row > [class*="col-"] {
+            padding: 0 15px;
+            margin-bottom: 40px;
+        }
+        
         .card {
-            background: rgba(30,32,36,0.88);
+            background: transparent;
             border: none;
-            border-radius: 22px;
-            box-shadow: 0 6px 22px 0 #09c6f944, 0 1.5px 4px 0 #0005;
-            transition: transform 0.19s cubic-bezier(.4,2,.7,1), box-shadow 0.32s cubic-bezier(.4,2,.7,1);
+            border-radius: 24px;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow: visible;
+            position: relative;
+            height: 100%;
+            animation: fadeInUp 0.8s ease backwards;
+        }
+        
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(135deg, #09c6f9, #00e0d3, #9333ea);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: -1;
+        }
+        
+        .card:hover::before {
+            opacity: 1;
+        }
+        
+        .card:hover {
+            transform: translateY(-15px) scale(1.03);
+        }
+        
+        .card-img-container {
+            width: 100%;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            margin: 0;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 20px;
             overflow: hidden;
             position: relative;
-            margin-bottom: 32px;
         }
-        .card:hover {
-            transform: scale(1.048) translateY(-5px) rotateZ(-0.2deg);
-            box-shadow: 0 8px 32px 0 #42e5feaa, 0 2.5px 12px #0008;
-            background: linear-gradient(100deg, #222b2e 0%, #14213d 100%);
-        }
+        
         .card-img-top {
-            height: 290px;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            background: #262b30;
-            margin-top: 13px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 18px 0 #09c6f944;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(9,198,249,0.3), 0 0 60px rgba(0,224,211,0.2);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            z-index: 1;
+            filter: brightness(1.05);
         }
+        
+        .card:hover .card-img-top {
+            transform: scale(1.08) rotateZ(-1deg);
+            box-shadow: 0 15px 60px rgba(9,198,249,0.5), 0 0 80px rgba(0,224,211,0.3);
+            filter: brightness(1.1);
+        }
+        
         .card-body {
             text-align: left;
-            padding: 13px 11px 20px 18px;
+            padding: 0 5px 20px;
+            position: relative;
+            z-index: 1;
+            background: rgba(15,15,20,0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            margin-top: 10px;
+            padding: 20px;
         }
+        
         .card-title {
-            font-size:1.13rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 9px;
+            margin-bottom: 12px;
             color: #00e0d3;
-            text-shadow: 0 2px 8px #00e0d344;
+            line-height: 1.4;
         }
-        .card-text {
-            font-size: 1.03rem;
-            margin-bottom: 7px;
-        }
-        .book-meta {
-            margin-bottom: 10px;
-            margin-top: 6px;
-        }
-        .book-author {
-            color: #00ffd5;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.01em;
-        }
-        .book-rating {
-            color: #ffec70;
-            font-size: 1.06rem;
-            font-weight: 600;
-            margin-right: 7px;
-        }
-        .book-votes {
-            color: #8ecae6;
-            font-size: 0.98rem;
-        }
-        .btn-buy {
-            display: block;
-            width: 100%;
-            margin-top: 14px;
-            background: linear-gradient(90deg, #00e0d3, #009ffd 90%);
-            color: #232b2e !important;
-            border: none;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-align: center;
-            border-radius: 10px;
-            font-size: 1.01rem;
-            padding: 9px 0;
-            box-shadow: 0 0 18px #00e0d370, 0 2px 7px #0007;
-            transition: background 0.21s, color 0.21s, transform 0.15s;
-        }
-        .btn-buy:hover {
-            background: linear-gradient(90deg, #00ffd5, #2ec4b6 100%);
-            color: #fff !important;
-            transform: scale(1.035) translateY(-2px);
-            box-shadow: 0 4px 24px #009ffd77;
-        }
-        @media (max-width: 991px) {
-            .card-img-top { height:220px; }
-        }
-        @media (max-width: 767px) {
-            .card-img-top { height:160px; }
-            h1 { font-size:1.32rem; }
-            .navbar-brand { font-size:1.1rem; }
-        }
+        
         .author-label {
             color: #48dee6;
             font-weight: 600;
-            margin-top: 12px;
+            margin-top: 10px;
+            font-size: 0.95rem;
         }
+        
         .rating-label {
             color: #ffe066;
             font-weight: 700;
             margin-top: 8px;
-            letter-spacing: 0.04em;
+            font-size: 1.1rem;
         }
+        
         .votes-label {
             color: #a3ffbe;
             font-weight: 600;
             margin-top: 8px;
+            font-size: 0.9rem;
         }
+        
         .buy-btn {
-            background: linear-gradient(90deg,#09fbd3 0%,#0083fe 100%);
-            color: #232526;
-            margin-top: 15px;
-            font-size: 1.03rem;
-            font-weight: bold;
-            border-radius: 10px;
-            box-shadow: 0 6px 22px 0 #09c6f944;
-            transition: background 0.22s, box-shadow 0.19s;
+            background: linear-gradient(135deg, #09fbd3 0%, #0083fe 100%);
+            color: #0a0a0f;
+            margin-top: 18px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(9,198,249,0.4);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             text-shadow: none;
-            padding: 9px 22px;
+            padding: 12px 24px;
             border: none;
-            display: inline-block;
+            display: block;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .buy-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .buy-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
         .buy-btn:hover {
-            background: linear-gradient(80deg, #34d1ff 0%, #09fbd3 100%);
+            background: linear-gradient(135deg, #34d1ff 0%, #09fbd3 100%);
             color: #fff;
-            box-shadow: 0 0 18px 0 #42e5feaa;
+            box-shadow: 0 12px 40px rgba(9,198,249,0.6);
+            transform: translateY(-3px) scale(1.02);
+        }
+        
+        @media (max-width: 991px) {
+            .card-img-container { height: 250px; }
+            .hero-title { font-size: 3.5rem; }
+            .discovery-cards { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+            .section-title { font-size: 2.5rem; }
+        }
+        
+        @media (max-width: 767px) {
+            .card-img-container { height: 200px; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .navbar-brand { font-size: 1.8rem; }
+            .section-title { font-size: 2rem; }
+            .discovery-cards { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 
 <body>
-
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand">My Book Recommender</a>
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/recommend">Recommend</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            <a class="navbar-brand" href="/">📚 BookRecommender</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/recommend">Similar Books</a></li>
+                <li class="nav-item"><a class="nav-link" href="/mood">Mood Search</a></li>
+                <li class="nav-item"><a class="nav-link" href="/categories">Categories</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- CONTENT -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 mt-4">
-                <h1>Top 50 Books</h1>
+    <!-- HERO SECTION -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">
+                <span>Discover</span> <span>Your</span> <span>Next</span> <span>Great</span> <span>Read</span>
+            </h1>
+            <p class="hero-subtitle">Explore books by mood, category, or find similar reads to your favorites</p>
+            
+            <!-- DISCOVERY CARDS -->
+            <div class="discovery-cards">
+                <a href="/recommend" class="discovery-card">
+                    <span class="discovery-icon">🔍</span>
+                    <h3 class="discovery-title">Similar Books</h3>
+                    <p class="discovery-desc">Find books similar to ones you love. Enter a book title and discover recommendations.</p>
+                </a>
+                <a href="/mood" class="discovery-card">
+                    <span class="discovery-icon">😊</span>
+                    <h3 class="discovery-title">Mood & Emotion</h3>
+                    <p class="discovery-desc">Search by how you want to feel. Happy, sad, funny, serious - find books that match your mood.</p>
+                </a>
+                <a href="/categories" class="discovery-card">
+                    <span class="discovery-icon">📂</span>
+                    <h3 class="discovery-title">Quick Categories</h3>
+                    <p class="discovery-desc">Browse by genre and theme. From romance to mystery, find your perfect read instantly.</p>
+                </a>
             </div>
+        </div>
+    </div>
 
+    <!-- TRENDING BOOKS -->
+    <div class="container">
+        <h2 class="section-title">🔥 Trending Now</h2>
+        <div class="trending-section">
+            <div class="row">
+                {% for i in range(0, trending.book_name|length) %}
+                <div class="col-md-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img class="card-img-top" src="{{ trending.image[i] }}" alt="{{ trending.book_name[i] }}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x300/1a1a2e/00e0d3?text=No+Image';" />
+                        </div>
+                        <div class="card-body">
+                            <p class="card-title">{{ trending.book_name[i] }}</p>
+                            <h5 class="author-label">Author: {{ trending.author[i] }}</h5>
+                            <h5 class="rating-label">⭐ {{ trending.rating[i]|round(1) }}</h5>
+                            <h5 class="votes-label">👥 {{ trending.votes[i] }} votes</h5>
+                            <a href="https://www.google.com/search?q=buy+{{ trending.book_name[i]|urlencode }}+{{ trending.author[i]|urlencode }}" target="_blank" class="btn buy-btn">Buy / Best Price</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- TOP 50 BOOKS -->
+        <h2 class="section-title">📚 Top 50 Popular Books</h2>
+        <div class="row">
             {% for i in range(0, book_name|length) %}
-            <div class="col-md-3 mt-5">
+            <div class="col-md-3 col-sm-6">
                 <div class="card">
-                    <img class="card-img-top" src="{{ image[i] }}" />
+                    <div class="card-img-container">
+                        <img class="card-img-top" src="{{ image[i] }}" alt="{{ book_name[i] }}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x300/1a1a2e/00e0d3?text=No+Image';" />
+                    </div>
                     <div class="card-body">
                         <p class="card-title">{{ book_name[i] }}</p>
-                        <h5 class="card-text author-label">Author: {{ author[i] }}</h5>
-                        <h5 class="card-text votes-label">Votes: {{ votes[i] }}</h5>
-                        <h5 class="card-text rating-label">Rating: {{ rating[i] }}</h5>
+                        <h5 class="author-label">Author: {{ author[i] }}</h5>
+                        <h5 class="rating-label">⭐ {{ rating[i]|round(1) }}</h5>
+                        <h5 class="votes-label">👥 {{ votes[i] }} votes</h5>
                         <a href="https://www.google.com/search?q=buy+{{ book_name[i]|urlencode }}+{{ author[i]|urlencode }}" target="_blank" class="btn buy-btn">Buy / Best Price</a>
                     </div>
                 </div>
             </div>
             {% endfor %}
-            
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
-
-    
