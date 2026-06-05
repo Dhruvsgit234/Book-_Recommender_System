@@ -17,7 +17,7 @@ A machine learning-based Book Recommender System that suggests books to users ba
 - Pandas
 - NumPy
 - Scikit-learn
-- Streamlit / Flask (if applicable)
+- Streamlit / Flask 
 - Jupyter Notebook
 - Pickle
 
