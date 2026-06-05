@@ -21,20 +21,4 @@ A machine learning-based Book Recommender System that suggests books to users ba
 - Jupyter Notebook
 - Pickle
 
-Book-Recommender-System/
-│
-├── data/
-│ ├── Books.csv
-│ ├── Ratings.csv
-│ └── Users.csv
-│
-├── notebooks/
-│ └── recommendation_model.ipynb
-│
-├── models/
-│ ├── popular.pkl
-│ └── similarity_scores.pkl
-│
-├── app.py
-├── requirements.txt
-└── README.md
+
